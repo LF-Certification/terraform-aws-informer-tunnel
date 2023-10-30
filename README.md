@@ -1,5 +1,5 @@
 <!-- BEGIN_TF_DOCS -->
-# Informer Reverse Proxy
+# Informer Datahub Tunnel
 An ECS based SSH reverse proxy used as a secure tunnel to the Entrinsik
 Datahub.
 
