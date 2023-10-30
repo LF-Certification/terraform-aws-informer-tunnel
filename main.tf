@@ -126,7 +126,7 @@ resource "aws_ecs_task_definition" "this" {
       },
       {
         name  = "HUB_PORT"
-        value = var.datahub_port
+        value = tostring(var.datahub_port)
       },
       {
         # The IP of the destination server
@@ -136,7 +136,7 @@ resource "aws_ecs_task_definition" "this" {
       {
         # The port the database service is listening on
         name  = "DEST_PORT"
-        value = var.datasource_port
+        value = tostring(var.datasource_port)
       }
     ],
     logConfiguration = {
