@@ -46,34 +46,40 @@ resource "aws_iam_role" "this" {
   assume_role_policy = data.aws_iam_policy_document.this.json
 }
 
+data "aws_iam_policy_document" "task" {
+  statement {
+    actions = ["ssm:GetParameter"]
+    effect  = "Allow"
+    resources = [
+      data.aws_ssm_parameter.ssh_private_key.arn,
+      data.aws_ssm_parameter.ssh_public_key.arn,
+      data.aws_ssm_parameter.ssh_certificate.arn
+    ]
+  }
+  # TODO(jkinred): tfsec fails this policy due to BatchCheckLayerAvailability wildcard
+  statement {
+    actions = [
+      "ecr:GetAuthorizationToken",
+      "ecr:BatchCheckLayerAvailability",
+      "ecr:GetDownloadUrlForLayer",
+      "ecr:BatchGetImage",
+      "logs:CreateLogStream",
+      "logs:PutLogEvents",
+      "ssmmessages:CreateControlChannel",
+      "ssmmessages:CreateDataChannel",
+      "ssmmessages:OpenControlChannel",
+      "ssmmessages:OpenDataChannel"
+    ]
+    effect  = "Allow"
+    resources = ["*"]
+  }
+}
+
 resource "aws_iam_role_policy" "this" {
   name = var.identifier
   role = aws_iam_role.this.id
 
-  # TODO(jkinred): tfsec fails this policy due to BatchCheckLayerAvailability wildcard
-  policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": [
-        "ecr:GetAuthorizationToken",
-        "ecr:BatchCheckLayerAvailability",
-        "ecr:GetDownloadUrlForLayer",
-        "ecr:BatchGetImage",
-        "logs:CreateLogStream",
-        "logs:PutLogEvents",
-        "ssmmessages:CreateControlChannel",
-        "ssmmessages:CreateDataChannel",
-        "ssmmessages:OpenControlChannel",
-        "ssmmessages:OpenDataChannel"
-      ],
-      "Effect": "Allow",
-      "Resource": "*"
-    }
-  ]
-}
-EOF
+  policy = data.aws_iam_policy_document.task.json
 }
 
 resource "aws_ecs_cluster" "this" {
