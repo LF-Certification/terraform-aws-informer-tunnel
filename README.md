@@ -1,7 +1,23 @@
 <!-- BEGIN_TF_DOCS -->
 # Informer Datahub Tunnel
+
 An ECS based SSH reverse proxy used as a secure tunnel to the Entrinsik
 Datahub.
+
+## Troubleshooting
+
+It is possible to enter the ECS container running the tunnel with the
+following command:
+
+```
+aws ecs execute-command \
+    --region <REGION> \
+    --cluster <CLUSTER> \
+    --task <TASK_ID> \
+    --container ssh-reverse-tunnel \
+    --command "/bin/bash" \
+    --interactive
+```
 
 ## Example
 
