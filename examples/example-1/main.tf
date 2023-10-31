@@ -1,6 +1,6 @@
 module "informer-tunnel" {
   source              = "git::https://github.com/LF-Certification/terraform-aws-informer-tunnel.git"
-  identifier          = "faraday-informer-secure-tunnel"
+  identifier          = "informer-secure-tunnel"
   # Typically obtained from the output of another resource
   vpc_id              = "vpc-12345"
   ecs_service_subnets = ["subnet-4321", "subnet-8765"]
