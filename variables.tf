@@ -8,13 +8,14 @@ variable "vpc_id" {
 }
 variable "image_name" {
   type        = string
-  description = "Name of the container image to use."
+  description = "Name of the container image to use"
   default     = "public.ecr.aws/entrinsik-inc/data-gateway"
 }
 variable "image_tag" {
   type        = string
-  description = "Tag of the container image to use."
-  # TODO(jkinred): Investigate whether Entrinsik offers an immutable tag
+  description = "Tag of the container image to use"
+  # TODO(jkinred): Investigate whether Entrinsik offers a version tag, or if we
+  # should use a hash as an immutable tag
   default     = "latest"
 }
 variable "ecs_service_subnets" {
@@ -40,5 +41,11 @@ variable "datahub_cidrs" {
 }
 variable "tunnel_parameter_store_prefix" {
   type = string
+  description = "Prefix for parameters stored in AWS Parameter Store"
   default = "informer"
+}
+variable "ecs_security_groups" {
+  type = list(string)
+  description = "Security groups which will be added to the ECS task"
+  default = []
 }
