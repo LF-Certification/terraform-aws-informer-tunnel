@@ -42,7 +42,6 @@ variable "datahub_cidrs" {
 variable "tunnel_parameter_store_prefix" {
   type = string
   description = "Prefix for parameters stored in AWS Parameter Store"
-  default = "informer"
 }
 variable "ecs_security_groups" {
   type = list(string)
