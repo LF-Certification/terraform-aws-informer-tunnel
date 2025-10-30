@@ -14,4 +14,4 @@ fi
 echo "--------------PUBLIC KEY--------------"
 cat bifrost.pub
 echo "------------END PUBLIC KEY------------"
-ssh -o StrictHostKeyChecking=accept-new -i bifrost -R 172.31.86.235:$HUB_PORT:$DEST_SERVER:$DEST_PORT -N datahub@datahub.informer.cloud
+ssh -o StrictHostKeyChecking=accept-new -i bifrost -R datahub.informer.cloud:$HUB_PORT:$DEST_SERVER:$DEST_PORT -N datahub@datahub.informer.cloud
